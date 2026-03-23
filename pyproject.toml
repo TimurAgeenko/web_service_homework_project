@@ -8,7 +8,9 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "django (>=6.0.3,<7.0.0)"
+    "django (>=6.0.3,<7.0.0)",
+    "psycopg2 (>=2.9.11,<3.0.0)",
+    "python-dotenv (>=1.2.2,<2.0.0)"
 ]
 
 
@@ -24,5 +26,6 @@ lint = [
 ]
 dev = [
     "pytest (>=9.0.2,<10.0.0)",
-    "pytest-coverage (>=0.0,<0.1)"
+    "pytest-coverage (>=0.0,<0.1)",
+    "ipython (>=9.11.0,<10.0.0)"
 ]
