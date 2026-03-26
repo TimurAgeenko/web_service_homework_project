@@ -16,7 +16,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
-        ordering = ['created_date']
+        ordering = ['-created_date']
 
 
 class Category(models.Model):
@@ -30,3 +30,15 @@ class Category(models.Model):
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
         ordering = ['name']
+
+
+class Contacts(models.Model):
+    country = models.CharField(max_length=50)
+    TIN = models.CharField(max_length=10)
+    address = models.CharField(max_length=50)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Контакты"
+        ordering = ['-created_date']
