@@ -1,0 +1,119 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Apple iPhone 15 Pro",
+        "description": "Мощный чип A17 Pro в стильном титановом корпусе. Идеален для мобильной фотографии и игр консольного уровня.",
+        "image": "product_photos/iphone.png",
+        "category": 1,
+        "price": 105000.0,
+        "created_date": "2026-03-26T01:23:45.985Z",
+        "updated_date": "2026-03-26T01:23:45.985Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Samsung Galaxy S24 Ultra",
+        "description": "Смартфон с искусственным интеллектом Galaxy AI и встроенным пером S Pen для максимальной продуктивности.",
+        "image": "product_photos/Samsung.jfif",
+        "category": 1,
+        "price": 115000.0,
+        "created_date": "2026-03-26T01:27:01.665Z",
+        "updated_date": "2026-03-26T01:27:01.665Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Xiaomi Redmi Note 13 Pro",
+        "description": "Золотая середина: камера 200 МП и яркий AMOLED-экран по доступной цене.",
+        "image": "product_photos/Xiaomi.jfif",
+        "category": 1,
+        "price": 30000.0,
+        "created_date": "2026-03-26T01:28:37.802Z",
+        "updated_date": "2026-03-26T01:28:37.802Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "MacBook Air 13 (M3)",
+        "description": "Самый популярный ноутбук в мире стал еще быстрее. Тонкий, бесшумный и работает до 18 часов без подзарядки.",
+        "image": "product_photos/Macbook.jfif",
+        "category": 2,
+        "price": 120000.0,
+        "created_date": "2026-03-26T01:29:39.828Z",
+        "updated_date": "2026-03-26T01:29:39.828Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "ASUS ROG Zephyrus G14",
+        "description": "Мощный игровой ноутбук в компактном корпусе. Идеален для геймеров и создателей контента, которым важна мобильность.",
+        "image": "product_photos/ASUS.jfif",
+        "category": 2,
+        "price": 185000.0,
+        "created_date": "2026-03-26T01:31:00.850Z",
+        "updated_date": "2026-03-26T01:31:00.850Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "name": "HUAWEI MateBook D 16",
+        "description": "Отличный выбор для офиса и учебы с большим качественным экраном и удобной полноразмерной клавиатурой.",
+        "image": "product_photos/HUAWEI.jfif",
+        "category": 2,
+        "price": 65000.0,
+        "created_date": "2026-03-26T01:32:16.965Z",
+        "updated_date": "2026-03-26T01:32:16.965Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+        "name": "LG OLED C3",
+        "description": "Эталон качества изображения с самоподсвечивающимися пикселями и глубочайшим контрастом. Мечта любого киномана.",
+        "image": "product_photos/LG.jfif",
+        "category": 3,
+        "price": 145000.0,
+        "created_date": "2026-03-26T01:33:20.456Z",
+        "updated_date": "2026-03-26T01:33:20.456Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+        "name": "Samsung Neo QLED QN90C",
+        "description": "Невероятная яркость и детализация даже в очень светлых помещениях благодаря технологии квантовых точек.",
+        "image": "product_photos/Neo.jfif",
+        "category": 3,
+        "price": 130000.0,
+        "created_date": "2026-03-26T01:34:08.496Z",
+        "updated_date": "2026-03-26T01:34:08.496Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+        "name": "Xiaomi TV A2",
+        "description": "Доступный вход в мир 4K. Стильный безрамочный дизайн и удобная система Android TV со всеми нужными приложениями.",
+        "image": "product_photos/Xiaomi_TV.jfif",
+        "category": 3,
+        "price": 26000.0,
+        "created_date": "2026-03-26T01:35:09.585Z",
+        "updated_date": "2026-03-26T01:35:09.585Z"
+    }
+}
+]
