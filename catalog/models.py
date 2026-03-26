@@ -4,8 +4,8 @@ from django.db import models
 class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    image = models.ImageField(upload_to="products_photo/")
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="product_photos/")
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='products')
     price = models.FloatField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
