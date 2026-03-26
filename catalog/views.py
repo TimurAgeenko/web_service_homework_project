@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Product, Contacts
 
 
 def home_page(request):
-    return render(request, "catalog/home.html")
+    products = Product.objects.all()[:6]
+    return render(request, "catalog/home.html", {'products': products})
 
 
 def contacts_page(request):
@@ -12,4 +14,5 @@ def contacts_page(request):
         phone_number = request.POST.get("phone")
         message = request.POST.get("message")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    return render(request, "catalog/contacts.html")
+    contacts = Contacts.objects.all()[0]
+    return render(request, "catalog/contacts.html", {'contacts': contacts})
