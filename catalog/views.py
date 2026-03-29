@@ -16,3 +16,8 @@ def contacts_page(request):
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
     contacts = Contacts.objects.all()[0]
     return render(request, "catalog/contacts.html", {'contacts': contacts})
+
+
+def product_page(request, product_id):
+    product = Product.objects.get(id=product_id)
+    return render(request, "catalog/product.html", {'product': product})

@@ -24,9 +24,9 @@
                 <div class="card-body d-flex flex-column">
                     <h1 class="card-title pricing-card-title">$ {{ product.price }}</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ product.description }}</li>
+                        <li>{{ product.description|truncatechars:100 }}</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary mt-auto">Купить</button>
+                    <a class="p-2 btn btn-outline-primary mt-auto" href="{% url 'catalog:product' product.pk %}">Купить</a>
                 </div>
             </div>
         </div>

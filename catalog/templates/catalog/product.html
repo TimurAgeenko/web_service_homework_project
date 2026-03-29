@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{product.name}}{% endblock %}
+
+{% block header %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{product.name}}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6">
+        <img src="{{ product.image.url }}"
+                     class="card-img-top"
+                     style="height: 250px; object-fit: contain; max-width: 400px"
+                     alt="{{ product.name }}">
+    </div>
+    <div class="col-6 d-flex flex-column">
+        <h4>{{product.description}}</h4>
+        <h2 class="mt-3">$ {{product.price}}</h2>
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary mt-auto">В корзину</button>
+    </div>
+</div>
+{% endblock %}
