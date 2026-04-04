@@ -1,0 +1,54 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Добавление товара{% endblock %}
+
+{% block header %}
+{% if not product %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Добавление товара</h1>
+    </div>
+{% else %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Товар успешно добавлен</h1>
+        <a class="p-2 btn btn-outline-primary mt-5" href="/home/">Вернуться на главную</a>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if not product %}
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name">Название товара</label>
+                    <input type="text" name="name" class="form-control" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="categorySelect">Название категории</label>
+                    <select name="category" class="form-select" id="categorySelect" required>
+                        <option selected disabled>Выберите категорию из списка</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="price">Цена товара</label>
+                    <input type="number" name="price" class="form-control" id="price" required>
+                </div>
+                <div class="mb-3">
+                    <label for="image">Выберете фото</label>
+                    <input type="file" name="image" class="form-control" id="image" accept="image/*" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description">Описание</label>
+                    <textarea name="description" class="form-control" id="description" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
+            </form>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
