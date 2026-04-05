@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, DetailView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .forms import ContactForm
@@ -33,9 +33,10 @@ class ContactsView(FormView):
         return super().form_valid(form)
 
 
-def product_page(request, product_id):
-    product = Product.objects.get(id=product_id)
-    return render(request, "catalog/product.html", {'product': product})
+class ProductDetailView(DetailView):
+    model = Product
+    context_object_name = 'product'
+    template_name = 'catalog/product.html'
 
 
 def adding_product_page(request):
