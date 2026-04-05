@@ -1,15 +1,14 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 from django.http import HttpResponse
-from django.core.paginator import Paginator
 from .models import Product, Contacts, Category
 
 
-def home_page(request):
-    products = Product.objects.all()
-    paginator = Paginator(products, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, "catalog/home.html", {'page_obj': page_obj})
+class ProductListView(ListView):
+    model = Product
+    context_object_name = 'products'
+    template_name = 'catalog/home.html'
+    paginate_by = 6
 
 
 def contacts_page(request):
