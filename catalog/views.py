@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import ListView
-from django.http import HttpResponse
+from django.views.generic import ListView, FormView
+from django.urls import reverse_lazy
+from django.contrib import messages
+from .forms import ContactForm
 from .models import Product, Contacts, Category
 
 
@@ -11,14 +13,24 @@ class ProductListView(ListView):
     paginate_by = 6
 
 
-def contacts_page(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        phone_number = request.POST.get("phone")
-        message = request.POST.get("message")
-        return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    contacts = Contacts.objects.all()[0]
-    return render(request, "catalog/contacts.html", {'contacts': contacts})
+class ContactsView(FormView):
+    form_class = ContactForm
+    template_name = 'catalog/contacts.html'
+    success_url = reverse_lazy('catalog:contacts')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['contacts'] = Contacts.objects.order_by('-id').first()
+        return context
+
+    def form_valid(self, form):
+        name = form.cleaned_data['name']
+        phone = form.cleaned_data['phone']
+        message = form.cleaned_data['message']
+
+        messages.success(self.request, f'Спасибо, {name}! Ваше сообщение получено.')
+
+        return super().form_valid(form)
 
 
 def product_page(request, product_id):
