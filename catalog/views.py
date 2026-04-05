@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import ListView, FormView, DetailView
+from django.views.generic import ListView, FormView, DetailView, CreateView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .forms import ContactForm
+from .forms import ContactForm, ProductForm
 from .models import Product, Contacts, Category
 
 
@@ -39,16 +39,8 @@ class ProductDetailView(DetailView):
     template_name = 'catalog/product.html'
 
 
-def adding_product_page(request):
-    categories = Category.objects.all()
-    if request.method == "POST":
-        name = request.POST.get("name")
-        category_id = request.POST.get("category")
-        category = Category.objects.get(id=category_id)
-        price = request.POST.get("price")
-        image = request.FILES.get("image")
-        description = request.POST.get("description")
-
-        product = Product.objects.create(name=name, category=category, price=price, image=image, description=description)
-        return render(request, "catalog/adding_product.html", {'product': product})
-    return render(request, "catalog/adding_product.html", {'categories': categories})
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/adding_product.html'
+    success_url = reverse_lazy('catalog:home')
