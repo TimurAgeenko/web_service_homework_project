@@ -1,0 +1,27 @@
+{% extends 'blog/blog_base.html' %}
+
+{% block title %}{{ blog_post.title }}{% endblock %}
+
+{% block header %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ blog_post.title }}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row d-flex align-items-center">
+    <div class="col-6">
+        <img src="{{ blog_post.image.url }}"
+                     style="height: 250px; object-fit: contain; max-width: 400px"
+                     alt="{{ blog_post.title }}">
+    </div>
+    <div class="col-6 d-flex flex-column">
+        <h4>Опубликовано {{blog_post.posted_date}}</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>{{ blog_post.content }}</h3>
+    </div>
+</div>
+{% endblock %}

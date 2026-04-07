@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib import messages
 
 from blog.forms import BlogPostForm
@@ -43,5 +43,12 @@ class BlogPostUpdateView(UpdateView):
 
 class BlogPostDeleteView(DeleteView):
     model = BlogPost
-    template_name = 'blog:blog_post_confirm_delete.html'
+    context_object_name = 'blog_post'
+    template_name = 'blog/blog_post_confirm_delete.html'
     success_url = reverse_lazy('blog:admin_page')
+
+
+class BlogPostDetailView(DetailView):
+    model = BlogPost
+    context_object_name = 'blog_post'
+    template_name = 'blog/blog_post_detail.html'
