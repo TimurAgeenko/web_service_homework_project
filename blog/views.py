@@ -31,3 +31,11 @@ class BlogPostAdminView(ListView):
     context_object_name = 'blog_posts'
     template_name = 'blog/admin_page.html'
     paginate_by = 20
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    form_class = BlogPostForm
+    context_object_name = 'blog_post'
+    template_name = 'blog/adding_blog_post.html'
+    success_url = reverse_lazy('blog:admin_page')

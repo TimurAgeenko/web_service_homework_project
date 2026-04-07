@@ -14,7 +14,7 @@
         <form method="post" action="" class="form-floating" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Опубликовать</button>
+            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
         </form>
         {% if messages %}
             <ul class="messages">
