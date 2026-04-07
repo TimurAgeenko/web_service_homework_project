@@ -24,7 +24,7 @@
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>{{ post.content|truncatechars:100 }}</li>
                     </ul>
-                    <a class="p-2 btn btn-outline-primary mt-auto" href="{% url 'blog:blog_post' blog_post.pk %}">Перейти к статье</a>
+                    <a class="p-2 btn btn-outline-primary mt-auto" href="{% url 'blog:blog_post_detail' post.pk %}">Перейти к статье</a>
                 </div>
             </div>
         </div>
