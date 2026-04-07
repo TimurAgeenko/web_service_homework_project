@@ -24,3 +24,10 @@ class BlogPostCreateView(CreateView):
         messages.success(self.request, 'Пост успешно добавлен!')
 
         return super().form_valid(form)
+
+
+class BlogPostAdminView(ListView):
+    model = BlogPost
+    context_object_name = 'blog_posts'
+    template_name = 'blog/admin_page.html'
+    paginate_by = 20
