@@ -36,7 +36,7 @@ class BlogPostCreateView(CreateView):
 class BlogPostAdminView(ListView):
     model = BlogPost
     context_object_name = 'blog_posts'
-    template_name = 'blog/admin_page.html'
+    template_name = 'blog/blog_admin_page.html'
     paginate_by = 20
 
 
@@ -82,7 +82,7 @@ class BlogPostDetailView(DetailView):
 
 class BlogPostStatusToggleView(View):
     context_object_name = 'post'
-    template_name = 'blog/admin_page.html'
+    template_name = 'blog/blog_admin_page.html'
 
     def get(self, request, *args, **kwargs):
         post = get_object_or_404(BlogPost, pk=kwargs['pk'])
