@@ -1,6 +1,6 @@
 from django import forms
 
-from catalog.models import Product, Category
+from catalog.models import Category, Product
 
 
 class ContactForm(forms.Form):

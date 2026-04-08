@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import ListView, FormView, DetailView, CreateView
-from django.urls import reverse_lazy
 from django.contrib import messages
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, FormView, ListView
+
 from .forms import ContactForm, ProductForm
-from .models import Product, Contacts, Category
+from .models import Category, Contacts, Product
 
 
 class ProductListView(ListView):

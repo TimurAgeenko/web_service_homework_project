@@ -1,9 +1,10 @@
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse, reverse_lazy
-from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView, View)
 
 from blog.forms import BlogPostForm
 from blog.models import BlogPost
