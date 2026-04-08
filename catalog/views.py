@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, FormView, ListView
+from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView
 
 from .forms import ContactForm, ProductForm
 from .models import Contacts, Product
@@ -42,12 +42,26 @@ class ProductDetailView(DetailView):
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
+    context_object_name = 'product'
     template_name = 'catalog/adding_product.html'
     success_url = reverse_lazy('catalog:home')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Пост успешно добавлен!')
+
+        return super().form_valid(form)
 
 
 class ProductAdminView(ListView):
     model = Product
     context_object_name = 'products'
     template_name = 'catalog/catalog_admin_page.html'
-    paginate_by = 20
+    paginate_by = 10
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    context_object_name = 'product'
+    template_name = 'catalog/adding_product.html'
+    success_url = reverse_lazy('catalog:catalog_admin_page')

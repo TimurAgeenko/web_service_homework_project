@@ -12,11 +12,11 @@
 <div class="row justify-content-center g-5">
     <div class="col-12">
         <ul class="list-group">
-            {% for post in blog_posts %}
+            {% for product in products %}
                 <li class="list-group-item">
-                    <a href="{% url 'catalog:product_detail' product.pk %}">{{ post.title }}</a>
+                    <a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a>
                     <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
-                    <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
+                    <a href="#" class="btn btn-sm btn-danger ms-2">Удалить</a>
                 </li>
             {% endfor %}
         </ul>

@@ -3,28 +3,28 @@
 {% block title %}Форма товара{% endblock %}
 
 {% block header %}
-{% if not product %}
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Форма товара</h1>
-    </div>
-{% else %}
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Товар успешно добавлен</h1>
-        <a class="p-2 btn btn-outline-primary mt-5" href="/home/">Вернуться на главную</a>
-    </div>
-{% endif %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Форма товара</h1>
+</div>
 {% endblock %}
 
 {% block content %}
-{% if not product %}
-    <div class="row">
-        <div class="col-6 mx-auto">
-            <form method="post" action="" class="form-floating" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
-            </form>
-        </div>
+<div class="row">
+    <div class="col-6 mx-auto">
+        <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
+        </form>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
-{% endif %}
+</div>
 {% endblock %}
