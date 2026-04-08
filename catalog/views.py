@@ -1,10 +1,9 @@
 from django.contrib import messages
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, FormView, ListView
 
 from .forms import ContactForm, ProductForm
-from .models import Category, Contacts, Product
+from .models import Contacts, Product
 
 
 class ProductListView(ListView):
@@ -45,3 +44,10 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     template_name = 'catalog/adding_product.html'
     success_url = reverse_lazy('catalog:home')
+
+
+class ProductAdminView(ListView):
+    model = Product
+    context_object_name = 'products'
+    template_name = 'catalog/catalog_admin_page.html'
+    paginate_by = 20
