@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.core.mail import send_mail
+from django.conf import settings
 from django.contrib import messages
 
 from blog.forms import BlogPostForm
@@ -64,6 +66,16 @@ class BlogPostDetailView(DetailView):
         item = super().get_object(queryset)
         item.views += 1
         item.save()
+
+        if item.views == 100:
+            send_mail(
+                subject=f'Популярная статья: {item.title}',
+                message=f'Статья {item.title} набрала 100 просмотров!',
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=['ageenko.timur.10@gmail.com'],
+                fail_silently=True,
+            )
+
         return item
 
 

@@ -135,3 +135,8 @@ STATICFILES_DIRS = [
 # Media files loaded by users
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+# Email
+EMAIL_HOST_USER = os.getenv("EMAIL")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
