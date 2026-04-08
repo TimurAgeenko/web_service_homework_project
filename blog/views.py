@@ -52,3 +52,10 @@ class BlogPostDetailView(DetailView):
     model = BlogPost
     context_object_name = 'blog_post'
     template_name = 'blog/blog_post_detail.html'
+    views = model.views
+
+    def get_object(self, queryset=None):
+        item = super().get_object(queryset)
+        item.views += 1
+        item.save()
+        return item
