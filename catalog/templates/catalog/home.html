@@ -1,4 +1,4 @@
-{% extends 'catalog/base.html' %}
+{% extends 'catalog/catalog_base.html' %}
 
 {% block title %}Главная страница{% endblock %}
 
@@ -23,7 +23,7 @@
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>{{ product.description|truncatechars:100 }}</li>
                     </ul>
-                    <a class="p-2 btn btn-outline-primary mt-auto" href="{% url 'catalog:product' product.pk %}">Купить</a>
+                    <a class="p-2 btn btn-outline-primary mt-auto" href="{% url 'catalog:product_detail' product.pk %}">Купить</a>
                 </div>
             </div>
         </div>
