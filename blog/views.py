@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib import messages
 
 from blog.forms import BlogPostForm
@@ -11,6 +12,9 @@ class BlogPostListView(ListView):
     context_object_name = 'blog_posts'
     template_name = 'blog/blog_home.html'
     paginate_by = 6
+
+    def get_queryset(self):
+        return BlogPost.objects.filter(is_published=True)
 
 
 class BlogPostCreateView(CreateView):
@@ -59,3 +63,14 @@ class BlogPostDetailView(DetailView):
         item.views += 1
         item.save()
         return item
+
+
+class BlogPostStatusToggleView(View):
+    context_object_name = 'post'
+    template_name = 'blog/admin_page.html'
+
+    def get(self, request, *args, **kwargs):
+        post = get_object_or_404(BlogPost, pk=kwargs['pk'])
+        post.is_published = not post.is_published
+        post.save()
+        return redirect('blog:admin_page')

@@ -17,6 +17,11 @@
                     <a href="{% url 'blog:blog_post_detail' post.pk %}">{{ post.title }}</a>
                     <a href="{% url 'blog:blog_post_edit' post.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
                     <a href="{% url 'blog:blog_post_delete' post.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
+                    {% if post.is_published %}
+                        <a href="{% url 'blog:toggle_status' post.pk %}" class="btn btn-sm btn-warning ms-5">Снять с публикации</a>
+                    {% else %}
+                        <a href="{% url 'blog:toggle_status' post.pk %}" class="btn btn-sm btn-success ms-5">Опубликовать</a>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
