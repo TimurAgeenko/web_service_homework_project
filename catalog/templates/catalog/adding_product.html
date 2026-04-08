@@ -17,7 +17,7 @@
             <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
         </form>
         {% if messages %}
-            <ul class="messages">
+            <ul class="messages mt-5">
                 {% for message in messages %}
                     <li class="alert alert-{{ message.tags }}">
                         {{ message }}
