@@ -47,7 +47,7 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy('catalog:adding_product')
 
     def form_valid(self, form):
-        messages.success(self.request, 'Пост успешно добавлен!')
+        messages.success(self.request, 'Товар успешно добавлен!')
 
         return super().form_valid(form)
 

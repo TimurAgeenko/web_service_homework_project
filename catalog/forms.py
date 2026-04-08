@@ -47,3 +47,9 @@ class ProductForm(forms.ModelForm):
         if any(spam_word in word.lower() for spam_word in self.spam for word in description.split()):
             raise ValidationError('Описание не должно содержать спама.')
         return description
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price <= 0:
+            raise ValidationError('Цена товара должна быть положительным числом.')
+        return price
