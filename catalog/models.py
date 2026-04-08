@@ -1,10 +1,11 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    image = models.ImageField(upload_to="product_photos/")
+    image = models.ImageField(upload_to="product_photos/", validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='products')
     price = models.FloatField()
     created_date = models.DateTimeField(auto_now_add=True)

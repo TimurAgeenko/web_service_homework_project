@@ -53,3 +53,10 @@ class ProductForm(forms.ModelForm):
         if price <= 0:
             raise ValidationError('Цена товара должна быть положительным числом.')
         return price
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        limit = 5 * 1024 * 1024
+        if image.size > limit:
+            raise ValidationError('Максимальный размер файла — 5 МБ.')
+        return image
