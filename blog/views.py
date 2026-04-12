@@ -37,7 +37,7 @@ class BlogPostAdminView(ListView):
     model = BlogPost
     context_object_name = 'blog_posts'
     template_name = 'blog/blog_admin_page.html'
-    paginate_by = 20
+    paginate_by = 10
 
 
 class BlogPostUpdateView(UpdateView):
@@ -61,7 +61,6 @@ class BlogPostDetailView(DetailView):
     model = BlogPost
     context_object_name = 'blog_post'
     template_name = 'blog/blog_post_detail.html'
-    views = model.views
 
     def get_object(self, queryset=None):
         item = super().get_object(queryset)

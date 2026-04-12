@@ -1,10 +1,9 @@
 from django.contrib import messages
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, FormView, ListView
+from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView, DeleteView
 
 from .forms import ContactForm, ProductForm
-from .models import Category, Contacts, Product
+from .models import Contacts, Product
 
 
 class ProductListView(ListView):
@@ -43,5 +42,33 @@ class ProductDetailView(DetailView):
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
+    context_object_name = 'product'
     template_name = 'catalog/adding_product.html'
-    success_url = reverse_lazy('catalog:home')
+    success_url = reverse_lazy('catalog:adding_product')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Товар успешно добавлен!')
+
+        return super().form_valid(form)
+
+
+class ProductAdminView(ListView):
+    model = Product
+    context_object_name = 'products'
+    template_name = 'catalog/catalog_admin_page.html'
+    paginate_by = 10
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    context_object_name = 'product'
+    template_name = 'catalog/adding_product.html'
+    success_url = reverse_lazy('catalog:catalog_admin_page')
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    context_object_name = 'product'
+    template_name = 'catalog/product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:catalog_admin_page')
