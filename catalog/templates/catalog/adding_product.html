@@ -1,4 +1,4 @@
-{% extends 'catalog/base.html' %}
+{% extends 'catalog/catalog_base.html' %}
 
 {% block title %}Добавление товара{% endblock %}
 
@@ -21,31 +21,7 @@
         <div class="col-6 mx-auto">
             <form method="post" action="" class="form-floating" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label for="name">Название товара</label>
-                    <input type="text" name="name" class="form-control" id="name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="categorySelect">Название категории</label>
-                    <select name="category" class="form-select" id="categorySelect" required>
-                        <option selected disabled>Выберите категорию из списка</option>
-                        {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="price">Цена товара</label>
-                    <input type="number" name="price" class="form-control" id="price" required>
-                </div>
-                <div class="mb-3">
-                    <label for="image">Выберете фото</label>
-                    <input type="file" name="image" class="form-control" id="image" accept="image/*" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description">Описание</label>
-                    <textarea name="description" class="form-control" id="description" required></textarea>
-                </div>
+                {{ form.as_p }}
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
             </form>
         </div>

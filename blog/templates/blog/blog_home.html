@@ -1,29 +1,30 @@
-{% extends 'catalog/catalog_base.html' %}
+{% extends 'blog/blog_base.html' %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}Лента{% endblock %}
 
 {% block header %}
-{% include 'catalog/header.html' %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Лента новостей</h1>
+</div>
 {% endblock %}
 
 {% block content %}
 <div class="row text-center justify-content-center g-5">
-    {% for product in products %}
+    {% for post in blog_posts %}
         <div class="col-12 col-md-4">
             <div class="card h-100 box-shadow">
-                <img src="{{ product.image.url }}"
+                <img src="{{ post.image.url }}"
                      class="card-img-top"
                      style="height: 250px; object-fit: contain; max-width: 400px"
-                     alt="{{ product.name }}">
+                     alt="{{ post.title }}">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ post.title }}</h4>
                 </div>
                 <div class="card-body d-flex flex-column">
-                    <h1 class="card-title pricing-card-title">$ {{ product.price }}</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ product.description|truncatechars:100 }}</li>
+                        <li>{{ post.content|truncatechars:100 }}</li>
                     </ul>
-                    <a class="p-2 btn btn-outline-primary mt-auto" href="{% url 'catalog:product_detail' product.pk %}">Купить</a>
+                    <a class="p-2 btn btn-outline-primary mt-auto" href="{% url 'blog:blog_post_detail' post.pk %}">Перейти к статье</a>
                 </div>
             </div>
         </div>
