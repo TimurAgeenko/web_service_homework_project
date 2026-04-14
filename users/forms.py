@@ -1,5 +1,22 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
+
+
+class CustomUserLoginForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserLoginForm, self).__init__(*args, **kwargs)
+
+        if 'username' in self.fields:
+            self.fields['username'].label = "Электронная почта"
+
+        if 'password' in self.fields:
+            self.fields['password'].label = "Пароль"
+
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'form-control',
+            })
 
 
 class CustomUserCreationForm(UserCreationForm):

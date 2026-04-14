@@ -1,8 +1,9 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.contrib.auth import login
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserLoginForm
 
 
 class RegisterView(CreateView):
@@ -13,6 +14,7 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         user = self.object
+        login(self.request, user)
         self.send_welcome_email(user.email)
         return response
 
@@ -22,3 +24,9 @@ class RegisterView(CreateView):
         message = 'Спасибо, что зарегистрировались в нашем сервисе!'
         recipient_list = [user_email]
         send_mail(subject=subject, message=message, from_email=None, recipient_list=recipient_list)
+
+
+class CustomLoginView(LoginView):
+    form_class = CustomUserLoginForm
+    template_name = 'users/login.html'
+    success_url = reverse_lazy('catalog:home')

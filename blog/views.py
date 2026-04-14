@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
 
@@ -20,7 +21,7 @@ class BlogPostListView(ListView):
         return BlogPost.objects.filter(is_published=True)
 
 
-class BlogPostCreateView(CreateView):
+class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = BlogPost
     form_class = BlogPostForm
     context_object_name = 'blog_post'

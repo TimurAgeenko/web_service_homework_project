@@ -1,0 +1,21 @@
+{% extends 'users/login_register_base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<ul class="nav nav-underline border-bottom mt-3">
+    <li class="nav-item">
+        <a class="nav-link text-dark active" href="{% url 'users:login' %}">Вход</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="{% url 'users:register' %}">Регистрация</a>
+    </li>
+</ul>
+<div class="mt-3 w-75">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary my-3 w-100">Войти</button>
+    </form>
+</div>
+{% endblock %}
