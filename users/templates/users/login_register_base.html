@@ -8,11 +8,7 @@
     <script src="/static/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body style="background-color: var(--bs-secondary-bg)">
-    <header>
-        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 class="display-4">TechStore</h1>
-        </div>
-    </header>
+    <header>{% block header %}{% endblock %}</header>
 
     <div class="container">
         <div class="row">

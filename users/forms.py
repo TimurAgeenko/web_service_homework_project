@@ -1,5 +1,9 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class CustomUserLoginForm(AuthenticationForm):
@@ -22,7 +26,7 @@ class CustomUserLoginForm(AuthenticationForm):
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm):
-        model = CustomUser
+        model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'phone_number', 'country', 'password1', 'password2')
 
         labels = {
@@ -52,3 +56,22 @@ class CustomUserCreationForm(UserCreationForm):
 
             if field.required:
                 field.label = f"{field.label}*"
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'phone_number', 'country')
+
+        labels = {
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+            'phone_number': 'Номер телефона',
+            'country': 'Страна',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileEditForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
