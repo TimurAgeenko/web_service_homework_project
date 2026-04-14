@@ -13,15 +13,21 @@
     <div class="col-12">
         <ul class="list-group">
             {% for post in blog_posts %}
-                <li class="list-group-item">
-                    <a href="{% url 'blog:blog_post_detail' post.pk %}">{{ post.title }}</a>
-                    <a href="{% url 'blog:blog_post_edit' post.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
-                    <a href="{% url 'blog:blog_post_delete' post.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
-                    {% if post.is_published %}
-                        <a href="{% url 'blog:toggle_status' post.pk %}" class="btn btn-sm btn-warning ms-5">Снять с публикации</a>
-                    {% else %}
-                        <a href="{% url 'blog:toggle_status' post.pk %}" class="btn btn-sm btn-success ms-5">Опубликовать</a>
-                    {% endif %}
+                <li class="list-group-item d-flex">
+                    <div class="btn-group">
+                        <a href="{% url 'blog:blog_post_detail' post.pk %}">{{ post.title }}</a>
+                        <a href="{% url 'blog:blog_post_edit' post.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
+                        <a href="{% url 'blog:blog_post_delete' post.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
+                    </div>
+
+                    <div class="ms-5">
+                        <form action="{% url 'blog:toggle_status' post.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm {% if post.is_published %}btn-warning{% else %}btn-success{% endif %}">
+                                {% if post.is_published %}Снять с публикации{% else %}Опубликовать{% endif %}
+                            </button>
+                        </form>
+                    </div>
                 </li>
             {% endfor %}
         </ul>

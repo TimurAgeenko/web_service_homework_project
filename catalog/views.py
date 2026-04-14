@@ -1,7 +1,8 @@
 from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView, DeleteView, View
 
 from .forms import ContactForm, ProductForm
 from .models import Contacts, Product
@@ -12,6 +13,9 @@ class ProductListView(ListView):
     context_object_name = 'products'
     template_name = 'catalog/home.html'
     paginate_by = 6
+
+    def get_queryset(self):
+        return Product.objects.filter(is_published=True)
 
 
 class ContactsView(FormView):
@@ -73,3 +77,14 @@ class ProductDeleteView(DeleteView):
     context_object_name = 'product'
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:catalog_admin_page')
+
+
+class ProductStatusToggleView(View):
+    context_object_name = 'product'
+    template_name = 'catalog/catalog_admin_page.html'
+
+    def post(self, request, *args, **kwargs):
+        product = get_object_or_404(Product, pk=kwargs['pk'])
+        product.is_published = not product.is_published
+        product.save()
+        return redirect("catalog:catalog_admin_page")

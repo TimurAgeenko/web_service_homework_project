@@ -13,10 +13,21 @@
     <div class="col-12">
         <ul class="list-group">
             {% for product in products %}
-                <li class="list-group-item">
-                    <a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a>
-                    <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
-                    <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
+                <li class="list-group-item d-flex">
+                    <div class="btn-group">
+                        <a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a>
+                        <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
+                        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
+                    </div>
+
+                    <div class="ms-5">
+                        <form action="{% url 'catalog:toggle_status' product.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm {% if product.is_published %}btn-warning{% else %}btn-success{% endif %}">
+                                {% if product.is_published %}Снять с публикации{% else %}Опубликовать{% endif %}
+                            </button>
+                        </form>
+                    </div>
                 </li>
             {% endfor %}
         </ul>

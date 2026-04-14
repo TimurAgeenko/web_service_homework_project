@@ -84,7 +84,7 @@ class BlogPostStatusToggleView(View):
     context_object_name = 'post'
     template_name = 'blog/blog_admin_page.html'
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         post = get_object_or_404(BlogPost, pk=kwargs['pk'])
         post.is_published = not post.is_published
         post.save()

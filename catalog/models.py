@@ -10,6 +10,7 @@ class Product(models.Model):
     price = models.FloatField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Продукт {self.name} из категории {self.category}"
