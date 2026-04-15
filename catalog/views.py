@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.cache import cache_page
@@ -18,7 +19,13 @@ class ProductListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Product.objects.filter(is_published=True)
+        queryset = cache.get('products_queryset')
+
+        if not queryset:
+            queryset = Product.objects.filter(is_published=True)
+            cache.set('products_queryset', queryset, 60 * 15)
+
+        return queryset
 
 
 class ContactsView(FormView):
