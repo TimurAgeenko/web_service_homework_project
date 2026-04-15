@@ -8,6 +8,7 @@ from django.views.generic import CreateView, DetailView, FormView, ListView, Upd
 
 from .forms import ContactForm, ProductForm
 from .models import Contacts, Product
+from .services import get_products_by_search
 
 
 class ProductListView(ListView):
@@ -99,3 +100,15 @@ class ProductStatusToggleView(PermissionRequiredMixin, View):
         product.is_published = not product.is_published
         product.save()
         return redirect("catalog:catalog_admin_page")
+
+
+class ProductCategoryListView(ListView):
+    model = Product
+    context_object_name = 'products'
+    template_name = 'catalog/products_by_category.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('search')
+
+        return get_products_by_search(queryset, query)

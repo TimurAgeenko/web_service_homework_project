@@ -1,0 +1,50 @@
+{% extends 'catalog/catalog_base.html' %}
+
+{% block title %}Товары по категории{% endblock %}
+
+{% block header %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Список товаров по категории</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mt-5">
+    <div class="col-12 col-md-4 mx-auto">
+        <form method="get" class="d-flex">
+            <input type="text"
+                   name="search"
+                   class="form-control me-2"
+                   placeholder="Поиск по категории..."
+                   value="{{ request.GET.search|default:'' }}">
+            <button class="btn btn-outline-success" type="submit">Найти</button>
+
+            {% if request.GET.search %}
+                <a href="{% url 'catalog:search' %}" class="btn btn-outline-secondary ms-2">Сбросить</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% if request.GET.search %}
+    {% if not products %}
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h3>В указанной категории нет товаров</h3>
+        </div>
+    {% else %}
+        <div class="row mt-5">
+            <div class="col-12 mx-auto">
+                <ul class="list-group">
+                    {% for product in products %}
+                        <li class="list-group-item d-flex py-3">
+                            <a href="{% url 'catalog:product_detail' product.pk %}" class="pe-3 border-end border-dark">{{ product.name }}</a>
+                            <div class="px-2 border-end border-dark">{{ product.category }}</div>
+                            <div class="px-2 border-end border-dark">$ {{ product.price }}</div>
+                            <div class="px-2">{{ product.description|truncatechars:90 }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}
