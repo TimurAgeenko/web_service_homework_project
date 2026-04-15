@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView, DeleteView, View
 
 from .forms import ContactForm, ProductForm
@@ -72,16 +72,18 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy('catalog:catalog_admin_page')
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     model = Product
     context_object_name = 'product'
     template_name = 'catalog/product_confirm_delete.html'
+    permission_required = 'catalog.delete_product'
     success_url = reverse_lazy('catalog:catalog_admin_page')
 
 
-class ProductStatusToggleView(View):
+class ProductStatusToggleView(PermissionRequiredMixin, View):
     context_object_name = 'product'
     template_name = 'catalog/catalog_admin_page.html'
+    permission_required = 'catalog.can_unpublish_product'
 
     def post(self, request, *args, **kwargs):
         product = get_object_or_404(Product, pk=kwargs['pk'])
