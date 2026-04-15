@@ -65,6 +65,11 @@ class ProductAdminView(ListView):
     template_name = 'catalog/catalog_admin_page.html'
     paginate_by = 10
 
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='Moders').exists() or self.request.user.is_superuser:
+            return Product.objects.all()
+        return Product.objects.filter(owner=self.request.user)
+
 
 class ProductUpdateView(UpdateView):
     model = Product
@@ -74,11 +79,10 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy('catalog:catalog_admin_page')
 
 
-class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+class ProductDeleteView(DeleteView):
     model = Product
     context_object_name = 'product'
     template_name = 'catalog/product_confirm_delete.html'
-    permission_required = 'catalog.delete_product'
     success_url = reverse_lazy('catalog:catalog_admin_page')
 
 

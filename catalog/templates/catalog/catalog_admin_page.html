@@ -1,62 +1,73 @@
 {% extends 'catalog/catalog_base.html' %}
 
-{% block title %}Страница админа{% endblock %}
+{% block title %}Редактирование товаров{% endblock %}
+
 
 {% block header %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Список продуктов</h1>
-</div>
+    {% if not products %}
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Вы не добавляли свои товары на сайт</h1>
+        </div>
+    {% else %}
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Список продуктов</h1>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="row justify-content-center g-5">
-    <div class="col-12">
-        <ul class="list-group">
-            {% for product in products %}
-                <li class="list-group-item d-flex">
-                    <div class="btn-group">
-                        <a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a>
-                        <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
-                        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
-                    </div>
+{% if products %}
+    <div class="row justify-content-center g-5">
+        <div class="col-12">
+            <ul class="list-group">
+                {% for product in products %}
+                    <li class="list-group-item d-flex">
+                        <div class="btn-group">
+                            <a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a>
+                            <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-sm btn-secondary ms-3">Редактировать</a>
+                            <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger ms-2">Удалить</a>
+                        </div>
 
-                    <div class="ms-5">
-                        <form action="{% url 'catalog:toggle_status' product.pk %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-sm {% if product.is_published %}btn-warning{% else %}btn-success{% endif %}">
-                                {% if product.is_published %}Снять с публикации{% else %}Опубликовать{% endif %}
-                            </button>
-                        </form>
-                    </div>
+                        {% if perms.catalog.can_unpublish_product %}
+                            <div class="ms-5">
+                                <form action="{% url 'catalog:toggle_status' product.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm {% if product.is_published %}btn-warning{% else %}btn-success{% endif %}">
+                                        {% if product.is_published %}Снять с публикации{% else %}Опубликовать{% endif %}
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; Первая</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
                 </li>
-            {% endfor %}
-        </ul>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
     </div>
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page=1">&laquo; Первая</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
-                </li>
-            {% endif %}
-
-            <li class="page-item disabled">
-                <span class="page-link">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
-            </li>
-
-            {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
-                </li>
-            {% endif %}
-
-        </ul>
-    </nav>
-</div>
+{% endif %}
 {% endblock %}
