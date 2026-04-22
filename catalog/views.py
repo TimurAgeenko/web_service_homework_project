@@ -2,9 +2,7 @@ from django.contrib import messages
 from django.core.cache import cache
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView, DeleteView, View
 
 from .forms import ContactForm, ProductForm
@@ -77,27 +75,44 @@ class ProductAdminView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        if self.request.user.groups.filter(name='Moders').exists() or self.request.user.is_superuser:
+        if self.request.user.groups.filter(name='Модератор продуктов').exists() or self.request.user.is_superuser:
             return Product.objects.all()
         return Product.objects.filter(owner=self.request.user)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     form_class = ProductForm
     context_object_name = 'product'
     template_name = 'catalog/adding_product.html'
     success_url = reverse_lazy('catalog:catalog_admin_page')
 
+    def test_func(self):
+        product = self.get_object()
+        return self.request.user.is_superuser or self.request.user == product.owner
 
-class ProductDeleteView(DeleteView):
+
+
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     context_object_name = 'product'
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:catalog_admin_page')
 
+    def test_func(self):
+        product = self.get_object()
+        user = self.request.user
 
-class ProductStatusToggleView(PermissionRequiredMixin, View):
+        is_owner = product.owner == user
+        is_moderator = (
+            user.groups.filter(name="Модератор продуктов").exists()
+            and user.has_perm('catalog.delete_product')
+        )
+
+        return user.is_superuser or is_owner or is_moderator
+
+
+class ProductStatusToggleView(LoginRequiredMixin, PermissionRequiredMixin, View):
     context_object_name = 'product'
     template_name = 'catalog/catalog_admin_page.html'
     permission_required = 'catalog.can_unpublish_product'

@@ -43,7 +43,7 @@ class BlogPostAdminView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        if self.request.user.groups.filter(name='Content Managers').exists() or self.request.user.is_superuser:
+        if self.request.user.groups.filter(name='Контент менеджер').exists() or self.request.user.is_superuser:
             return BlogPost.objects.all()
         return BlogPost.objects.filter(author=self.request.user)
 
