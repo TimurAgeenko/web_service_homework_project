@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
@@ -6,6 +7,7 @@ from django.views.generic import CreateView, DetailView, FormView, ListView, Upd
 
 from .forms import ContactForm, ProductForm
 from .models import Contacts, Product
+from .services import get_products_by_search
 
 
 class ProductListView(ListView):
@@ -15,7 +17,13 @@ class ProductListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Product.objects.filter(is_published=True)
+        queryset = cache.get('products_queryset')
+
+        if not queryset:
+            queryset = Product.objects.filter(is_published=True)
+            cache.set('products_queryset', queryset, 60 * 15)
+
+        return queryset
 
 
 class ContactsView(FormView):
@@ -38,6 +46,7 @@ class ContactsView(FormView):
         return super().form_valid(form)
 
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     context_object_name = 'product'
@@ -113,3 +122,15 @@ class ProductStatusToggleView(LoginRequiredMixin, PermissionRequiredMixin, View)
         product.is_published = not product.is_published
         product.save()
         return redirect("catalog:catalog_admin_page")
+
+
+class ProductCategoryListView(ListView):
+    model = Product
+    context_object_name = 'products'
+    template_name = 'catalog/products_by_category.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('search')
+
+        return get_products_by_search(queryset, query)
