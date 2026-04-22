@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView, DeleteView
 
 from .forms import ContactForm, ProductForm
@@ -39,7 +40,7 @@ class ProductDetailView(DetailView):
     template_name = 'catalog/product.html'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     context_object_name = 'product'
