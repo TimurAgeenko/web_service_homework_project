@@ -9,7 +9,8 @@
         "category": 1,
         "price": 105000.0,
         "created_date": "2026-03-26T01:23:45.985Z",
-        "updated_date": "2026-03-26T01:23:45.985Z"
+        "updated_date": "2026-04-14T20:43:35.862Z",
+        "is_published": false
     }
 },
 {
@@ -22,7 +23,8 @@
         "category": 1,
         "price": 115000.0,
         "created_date": "2026-03-26T01:27:01.665Z",
-        "updated_date": "2026-03-26T01:27:01.665Z"
+        "updated_date": "2026-04-14T20:43:35.423Z",
+        "is_published": false
     }
 },
 {
@@ -35,7 +37,8 @@
         "category": 1,
         "price": 30000.0,
         "created_date": "2026-03-26T01:28:37.802Z",
-        "updated_date": "2026-03-26T01:28:37.802Z"
+        "updated_date": "2026-04-14T20:43:34.951Z",
+        "is_published": false
     }
 },
 {
@@ -48,7 +51,8 @@
         "category": 2,
         "price": 120000.0,
         "created_date": "2026-03-26T01:29:39.828Z",
-        "updated_date": "2026-03-26T01:29:39.828Z"
+        "updated_date": "2026-04-14T20:43:34.347Z",
+        "is_published": false
     }
 },
 {
@@ -61,7 +65,8 @@
         "category": 2,
         "price": 185000.0,
         "created_date": "2026-03-26T01:31:00.850Z",
-        "updated_date": "2026-03-26T01:31:00.850Z"
+        "updated_date": "2026-04-14T20:43:33.970Z",
+        "is_published": false
     }
 },
 {
@@ -74,7 +79,8 @@
         "category": 2,
         "price": 65000.0,
         "created_date": "2026-03-26T01:32:16.965Z",
-        "updated_date": "2026-03-26T01:32:16.965Z"
+        "updated_date": "2026-04-14T20:43:33.431Z",
+        "is_published": false
     }
 },
 {
@@ -87,7 +93,8 @@
         "category": 3,
         "price": 145000.0,
         "created_date": "2026-03-26T01:33:20.456Z",
-        "updated_date": "2026-03-26T01:33:20.456Z"
+        "updated_date": "2026-04-14T20:43:33.032Z",
+        "is_published": false
     }
 },
 {
@@ -100,7 +107,8 @@
         "category": 3,
         "price": 130000.0,
         "created_date": "2026-03-26T01:34:08.496Z",
-        "updated_date": "2026-03-26T01:34:08.496Z"
+        "updated_date": "2026-04-14T20:43:32.598Z",
+        "is_published": false
     }
 },
 {
@@ -113,7 +121,8 @@
         "category": 3,
         "price": 26000.0,
         "created_date": "2026-03-26T01:35:09.585Z",
-        "updated_date": "2026-03-26T01:35:09.585Z"
+        "updated_date": "2026-04-14T20:43:31.997Z",
+        "is_published": false
     }
 }
 ]

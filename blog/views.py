@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
 
@@ -29,6 +29,8 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('blog:adding_blog_post')
 
     def form_valid(self, form):
+        form.instance.author = self.request.user
+
         messages.success(self.request, 'Пост успешно добавлен!')
 
         return super().form_valid(form)
@@ -39,6 +41,11 @@ class BlogPostAdminView(ListView):
     context_object_name = 'blog_posts'
     template_name = 'blog/blog_admin_page.html'
     paginate_by = 10
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='Контент менеджер').exists() or self.request.user.is_superuser:
+            return BlogPost.objects.all()
+        return BlogPost.objects.filter(author=self.request.user)
 
 
 class BlogPostUpdateView(UpdateView):
@@ -80,11 +87,12 @@ class BlogPostDetailView(DetailView):
         return item
 
 
-class BlogPostStatusToggleView(View):
+class BlogPostStatusToggleView(PermissionRequiredMixin, View):
     context_object_name = 'post'
     template_name = 'blog/blog_admin_page.html'
+    permission_required = 'blog.can_unpublish_post'
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         post = get_object_or_404(BlogPost, pk=kwargs['pk'])
         post.is_published = not post.is_published
         post.save()
